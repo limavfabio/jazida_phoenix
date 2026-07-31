@@ -1,0 +1,73 @@
+<Layouts.app flash={@flash} current_scope={@current_scope}>
+  <section id="notifications-page" class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-20">
+    <p class="font-mono text-[10px] tracking-[.2em] text-[#ff5d39] uppercase">
+      Monitoramento pessoal
+    </p>
+    <h1 class="font-display mt-3 text-5xl font-semibold tracking-tight">Seus alertas</h1>
+    <p class="mt-3 max-w-xl text-sm leading-6 text-[#527065]">
+      Mudanças materiais detectadas nas fontes oficiais para os processos que você acompanha.
+    </p>
+
+    <div id="notifications" phx-update="stream" class="mt-10 space-y-3">
+      <div
+        id="notifications-empty"
+        class="hidden only:block rounded-[1.5rem] border border-dashed border-[#183128]/20 bg-white/50 p-10 text-center"
+      >
+        <.icon name="hero-bell-slash" class="mx-auto size-8 text-[#ff5d39]" />
+        <p class="mt-3 font-semibold">Nenhuma alteração por enquanto</p>
+        <p class="mt-1 text-sm text-[#527065]">
+          Abra uma área no mapa e escolha “Acompanhar mudanças”.
+        </p>
+        <.link
+          navigate={~p"/"}
+          class="mt-5 inline-flex rounded-full bg-[#183128] px-5 py-2.5 text-sm font-bold text-white transition hover:-translate-y-0.5"
+        >Explorar mapa</.link>
+      </div>
+
+      <article
+        :for={{id, notification} <- @streams.notifications}
+        id={id}
+        class={[
+          "group grid gap-4 rounded-[1.5rem] border bg-white p-5 shadow-[0_10px_35px_rgba(24,49,40,.06)] transition hover:-translate-y-0.5 sm:grid-cols-[1fr_auto]",
+          if(notification.read_at,
+            do: "border-[#183128]/8 opacity-70",
+            else: "border-[#ff5d39]/25"
+          )
+        ]}
+      >
+        <div>
+          <div class="flex items-center gap-2">
+            <span :if={!notification.read_at} class="size-2 rounded-full bg-[#ff5d39]"></span>
+            <p class="font-mono text-xs font-medium">
+              {notification.mining_process.process_number}
+            </p>
+          </div>
+          <p class="mt-2 font-semibold">Mudança em {notification.process_change.field}</p>
+          <p class="mt-1 text-xs text-[#527065]">
+            Observada em {Calendar.strftime(
+              notification.process_change.observed_at,
+              "%d/%m/%Y às %H:%M UTC"
+            )}
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            :if={!notification.read_at}
+            type="button"
+            id={"mark-read-#{notification.id}"}
+            phx-click="mark_read"
+            phx-value-id={notification.id}
+            class="rounded-full border border-[#183128]/15 px-4 py-2 text-xs font-bold transition hover:border-[#183128]/40"
+          >Marcar como lido</button>
+          <.link
+            navigate={~p"/?process=#{notification.mining_process_id}"}
+            class="grid size-9 place-items-center rounded-full bg-[#183128] text-white transition group-hover:rotate-6"
+            aria-label="Abrir processo no mapa"
+          >
+            <.icon name="hero-arrow-up-right" class="size-4" />
+          </.link>
+        </div>
+      </article>
+    </div>
+  </section>
+</Layouts.app>

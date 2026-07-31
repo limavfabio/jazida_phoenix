@@ -1,0 +1,5 @@
+﻿ProcessoMinerario;UnidadeFederacao;Municipio;AreaPoligonal;Substancia;UsoSubstancia;RegimeDisponibilidade;IndicaNominacao;FaseProcessoMinerario;SituacaoProcesso;SituacaoEstoque;IndicaDisponibilizacaoEdital;UltimaSituacaoEdital
+844001/2022;Alagoas;UNIÃO DOS PALMARES;21,54;AREIA;Construção civil;;Sim;Licenciamento;Ativo;Não apta para Disponibilidade;Não;
+811171/2016;Rio Grande do Sul;CAPELA DE SANTANA;48,38;"AREIA; ARGILA; ARGILA";"Construção civil; Construção civil; Cerâmica vermelha";;Sim;Disponibilidade;Inativo;Não apta para Disponibilidade;Sim;Livre
+300091/2020;Minas Gerais;GOUVEIA;10,13;Não se aplica;Não se aplica;;Sim;Disponibilidade;Inativo;Apta para Disponibilidade;Sim;Não Requerida
+844001/2022' OR 1=1--;Alagoas;UNIÃO DOS PALMARES;21,54;AREIA;Construção civil;;Sim;Licenciamento;Ativo;Para Análise;Não;

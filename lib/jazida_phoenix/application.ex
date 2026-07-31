@@ -10,6 +10,7 @@ defmodule JazidaPhoenix.Application do
     children = [
       JazidaPhoenixWeb.Telemetry,
       JazidaPhoenix.Repo,
+      {Oban, Application.fetch_env!(:jazida_phoenix, Oban)},
       {DNSCluster, query: Application.get_env(:jazida_phoenix, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: JazidaPhoenix.PubSub},
       # Start a worker by calling: JazidaPhoenix.Worker.start_link(arg)

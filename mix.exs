@@ -40,10 +40,14 @@ defmodule JazidaPhoenix.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:argon2_elixir, "~> 4.0"},
       {:phoenix, "~> 1.8.9"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.13"},
       {:postgrex, ">= 0.0.0"},
+      {:geo_postgis, "~> 3.7"},
+      {:nimble_csv, "~> 1.3"},
+      {:oban, "~> 2.23"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 1.2.0"},
@@ -55,13 +59,6 @@ defmodule JazidaPhoenix.MixProject do
        github: "tailwindlabs/heroicons",
        tag: "v2.2.0",
        sparse: "optimized",
-       app: false,
-       compile: false,
-       depth: 1},
-      {:daisyui,
-       github: "saadeghi/daisyui",
-       tag: "v5.5.20",
-       sparse: "packages/bundle",
        app: false,
        compile: false,
        depth: 1},

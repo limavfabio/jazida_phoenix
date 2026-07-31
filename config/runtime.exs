@@ -23,6 +23,33 @@ end
 config :jazida_phoenix, JazidaPhoenixWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 
+mining_config = Application.fetch_env!(:jazida_phoenix, :mining)
+
+config :jazida_phoenix,
+       :mining,
+       Keyword.merge(mining_config,
+         map_style_url: System.get_env("MAP_STYLE_URL", mining_config[:map_style_url]),
+         states_geojson_url_template:
+           System.get_env(
+             "STATES_GEOJSON_URL_TEMPLATE",
+             mining_config[:states_geojson_url_template]
+           ),
+         sople_stock_url: System.get_env("SOPLE_STOCK_URL", mining_config[:sople_stock_url]),
+         sople_round_results_url:
+           System.get_env("SOPLE_ROUND_RESULTS_URL", mining_config[:sople_round_results_url]),
+         sigmine_active_url:
+           System.get_env("SIGMINE_ACTIVE_URL", mining_config[:sigmine_active_url]),
+         sigmine_inactive_url:
+           System.get_env("SIGMINE_INACTIVE_URL", mining_config[:sigmine_inactive_url]),
+         stale_after_hours:
+           String.to_integer(
+             System.get_env(
+               "SOURCE_STALE_AFTER_HOURS",
+               to_string(mining_config[:stale_after_hours])
+             )
+           )
+       )
+
 if config_env() == :dev do
   # Reload browser tabs when matching files change.
   config :jazida_phoenix, JazidaPhoenixWeb.Endpoint,
@@ -41,6 +68,32 @@ if config_env() == :dev do
 end
 
 if config_env() == :prod do
+  map_style_url =
+    System.get_env("MAP_STYLE_URL") ||
+      raise "MAP_STYLE_URL is required in production (use an HTTPS MapLibre style URL)"
+
+  unless URI.parse(map_style_url).scheme == "https" do
+    raise "MAP_STYLE_URL must use HTTPS in production"
+  end
+
+  if is_nil(System.find_executable("ogr2ogr")) do
+    raise "ogr2ogr is required in production for SIGMINE synchronization"
+  end
+
+  resend_api_key =
+    System.get_env("RESEND_API_KEY") ||
+      raise "RESEND_API_KEY is required in production for account and digest email"
+
+  email_from =
+    System.get_env("EMAIL_FROM") ||
+      raise "EMAIL_FROM is required in production (for example, notificacoes@example.com)"
+
+  config :jazida_phoenix, JazidaPhoenix.Mailer,
+    adapter: Swoosh.Adapters.Resend,
+    api_key: resend_api_key
+
+  config :jazida_phoenix, :email_from, {"Jazida", email_from}
+
   database_url =
     System.get_env("DATABASE_URL") ||
       raise """
@@ -56,7 +109,8 @@ if config_env() == :prod do
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     # For machines with several cores, consider starting multiple pools of `pool_size`
     # pool_count: 4,
-    socket_options: maybe_ipv6
+    socket_options: maybe_ipv6,
+    types: JazidaPhoenix.PostgresTypes
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

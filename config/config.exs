@@ -7,9 +7,54 @@
 # General application configuration
 import Config
 
+config :jazida_phoenix, :scopes,
+  user: [
+    default: true,
+    module: JazidaPhoenix.Accounts.Scope,
+    assign_key: :current_scope,
+    access_path: [:user, :id],
+    schema_key: :user_id,
+    schema_type: :id,
+    schema_table: :users,
+    test_data_fixture: JazidaPhoenix.AccountsFixtures,
+    test_setup_helper: :register_and_log_in_user
+  ]
+
 config :jazida_phoenix,
   ecto_repos: [JazidaPhoenix.Repo],
   generators: [timestamp_type: :utc_datetime]
+
+config :jazida_phoenix, JazidaPhoenix.Repo, types: JazidaPhoenix.PostgresTypes
+
+config :jazida_phoenix, Oban,
+  repo: JazidaPhoenix.Repo,
+  queues: [imports: 1, notifications: 5],
+  plugins: [
+    {Oban.Plugins.Pruner, max_age: 7 * 24 * 60 * 60},
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"17 5 * * *", JazidaPhoenix.Mining.Workers.SopleSyncWorker},
+       {"47 5 * * *", JazidaPhoenix.Mining.Workers.SigmineSyncWorker},
+       {"0 11 * * *", JazidaPhoenix.Notifications.DigestWorker}
+     ]}
+  ]
+
+config :jazida_phoenix, :mining,
+  timezone: "America/Sao_Paulo",
+  map_style_url: "https://demotiles.maplibre.org/style.json",
+  states_geojson_url_template:
+    "https://servicodados.ibge.gov.br/api/v3/malhas/estados/{state}?formato=application/vnd.geo+json&qualidade=minima",
+  stale_after_hours: 48,
+  sople_stock_url: "https://dadosabertos.anm.gov.br/SOPLE/EstoqueAreas.csv",
+  sople_round_results_url:
+    "https://dadosabertos.anm.gov.br/SOPLE/ResultadoRodadaDisponibilidade.csv",
+  sigmine_active_url: "https://dadosabertos.anm.gov.br/SIGMINE/PROCESSOS_MINERARIOS/BRASIL.zip",
+  sigmine_inactive_url:
+    "https://dadosabertos.anm.gov.br/SIGMINE/PROCESSOS_MINERARIOS/PROCESSOS_INATIVOS.zip",
+  download_timeout_ms: 120_000,
+  max_download_bytes: 2_000_000_000,
+  max_archive_entries: 32,
+  max_archive_uncompressed_bytes: 5_000_000_000
 
 # Configure the endpoint
 config :jazida_phoenix, JazidaPhoenixWeb.Endpoint,
@@ -61,7 +106,16 @@ config :tailwind,
 # Configure Elixir's Logger
 config :logger, :default_formatter,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+  metadata: [
+    :request_id,
+    :source,
+    :source_import_id,
+    :outcome,
+    :duration_ms,
+    :parsed_rows,
+    :imported_rows,
+    :warning_count
+  ]
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason

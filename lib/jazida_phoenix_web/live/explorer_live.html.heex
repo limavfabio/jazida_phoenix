@@ -1,0 +1,365 @@
+<Layouts.app flash={@flash} current_scope={@current_scope}>
+  <div id="explorer" class="mx-auto max-w-[1600px] px-3 py-3 sm:px-5 sm:py-5">
+    <div class="grid min-h-[calc(100vh-6.5rem)] overflow-hidden rounded-[1.75rem] border border-[#183128]/10 bg-white shadow-[0_24px_80px_rgba(24,49,40,.12)] lg:h-[calc(100vh-6.5rem)] lg:grid-cols-[390px_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
+      <aside class="relative z-20 flex min-h-0 max-h-[52vh] flex-col border-b border-[#183128]/10 bg-[#fffdf8] lg:max-h-full lg:border-r lg:border-b-0">
+        <div class="border-b border-[#183128]/10 p-5 sm:p-6">
+          <p class="font-mono text-[10px] tracking-[.2em] text-[#ff5d39] uppercase">
+            Mapa de oportunidades
+          </p>
+          <h1 class="font-display mt-2 max-w-xs text-[2.35rem] leading-[.96] font-semibold tracking-[-.025em] text-[#183128]">
+            O território mineral, legível.
+          </h1>
+          <p class="mt-3 text-sm leading-6 text-[#527065]">
+            Consulte áreas públicas da ANM por processo, lugar e situação oficial.
+          </p>
+
+          <.form
+            for={@filter_form}
+            id="explorer-filter-form"
+            phx-change="filter"
+            class="mt-5 space-y-3"
+          >
+            <div class="relative">
+              <.icon
+                name="hero-magnifying-glass"
+                class="pointer-events-none absolute top-1/2 left-3.5 z-10 size-4 -translate-y-1/2 text-[#527065]"
+              />
+              <.input
+                field={@filter_form[:q]}
+                type="search"
+                aria-label="Buscar por processo, município ou substância"
+                placeholder="Processo, município ou substância"
+                phx-debounce="350"
+                class="h-12 w-full rounded-2xl border border-[#183128]/15 bg-white pr-4 pl-10 text-sm text-[#183128] outline-none transition placeholder:text-[#789087] focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+              />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <.input
+                field={@filter_form[:state]}
+                type="text"
+                aria-label="Filtrar por unidade federativa"
+                maxlength="2"
+                placeholder="UF"
+                phx-debounce="350"
+                class="h-11 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm uppercase outline-none transition focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+              />
+              <.input
+                field={@filter_form[:category]}
+                type="select"
+                aria-label="Filtrar por categoria de navegação"
+                prompt="Todas as situações"
+                options={[
+                  {"Para análise", "pending_analysis"},
+                  {"Em análise", "under_analysis"},
+                  {"Apta", "eligible"},
+                  {"Não apta", "not_eligible"},
+                  {"Livre", "free"},
+                  {"Arrematada", "awarded"}
+                ]}
+                class="h-11 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none transition focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+              />
+            </div>
+            <details
+              id="advanced-filters"
+              class="group rounded-xl border border-[#183128]/10 bg-white"
+            >
+              <summary class="flex cursor-pointer list-none items-center justify-between px-3 py-2.5 text-xs font-semibold text-[#527065]">
+                Mais filtros
+                <.icon name="hero-chevron-down" class="size-4 transition group-open:rotate-180" />
+              </summary>
+              <div class="grid gap-2 border-t border-[#183128]/10 p-3 sm:grid-cols-2 lg:grid-cols-1">
+                <.input
+                  field={@filter_form[:municipality]}
+                  type="text"
+                  aria-label="Filtrar por município"
+                  placeholder="Município"
+                  phx-debounce="350"
+                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                />
+                <.input
+                  field={@filter_form[:substance]}
+                  type="text"
+                  aria-label="Filtrar por substância"
+                  placeholder="Substância"
+                  phx-debounce="350"
+                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                />
+                <.input
+                  field={@filter_form[:status]}
+                  type="text"
+                  aria-label="Filtrar por situação oficial"
+                  placeholder="Situação oficial"
+                  phx-debounce="350"
+                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                />
+                <.input
+                  field={@filter_form[:regime]}
+                  type="text"
+                  aria-label="Filtrar por regime"
+                  placeholder="Regime"
+                  phx-debounce="350"
+                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                />
+                <.input
+                  field={@filter_form[:round]}
+                  type="number"
+                  aria-label="Filtrar por número da rodada"
+                  min="1"
+                  placeholder="Rodada"
+                  phx-debounce="350"
+                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                />
+              </div>
+            </details>
+          </.form>
+
+          <div class="mt-4 flex items-center justify-between text-[11px] text-[#527065]">
+            <span class="inline-flex items-center gap-1.5">
+              <span class={[
+                "size-2 rounded-full",
+                if(@stale?, do: "bg-amber-500", else: "bg-emerald-500")
+              ]}></span>
+              <%= if @source_import do %>
+                <%= if @latest_source_import.status == "failed" do %>
+                  Última sincronização falhou · exibindo dados de {Calendar.strftime(
+                    @source_import.finished_at,
+                    "%d/%m/%Y"
+                  )}
+                <% else %>
+                  <%= if @stale? do %>
+                    Dados possivelmente desatualizados · {Calendar.strftime(
+                      @source_import.finished_at,
+                      "%d/%m/%Y"
+                    )}
+                  <% else %>
+                    Dados de {Calendar.strftime(@source_import.finished_at, "%d/%m/%Y")}
+                  <% end %>
+                <% end %>
+              <% else %>
+                Aguardando primeira sincronização
+              <% end %>
+            </span>
+            <button
+              :if={@filters != %{}}
+              type="button"
+              phx-click="clear_filters"
+              id="clear-filters"
+              class="font-semibold underline decoration-[#ff5d39]/50 underline-offset-4 hover:text-[#ff5d39]"
+            >
+              Limpar
+            </button>
+          </div>
+        </div>
+
+        <div id="process-results" phx-update="stream" class="min-h-0 flex-1 overflow-y-auto p-3">
+          <div
+            id="results-empty"
+            class="hidden only:grid min-h-40 place-items-center rounded-2xl border border-dashed border-[#183128]/15 p-6 text-center"
+          >
+            <div>
+              <.icon name="hero-map-pin" class="mx-auto size-6 text-[#ff5d39]" />
+              <p class="mt-2 text-sm font-semibold">Nenhuma área encontrada</p>
+              <p class="mt-1 text-xs text-[#527065]">Tente ampliar os filtros.</p>
+            </div>
+          </div>
+          <.link
+            :for={{id, process} <- @streams.processes}
+            id={id}
+            patch={~p"/?#{compact_params(Map.put(@filters, "process", process.id))}"}
+            class="group mb-2 block rounded-2xl border border-transparent p-4 transition duration-200 hover:border-[#183128]/10 hover:bg-[#f4f1e9]"
+          >
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-mono text-xs font-medium text-[#183128]">
+                  {process.process_number}
+                </p>
+                <p class="mt-1 line-clamp-1 text-sm font-semibold">
+                  {Enum.join(process.municipalities, ", ")}
+                </p>
+              </div>
+              <.icon
+                name="hero-arrow-up-right"
+                class="size-4 text-[#789087] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#ff5d39]"
+              />
+            </div>
+            <div class="mt-3 flex items-center gap-2 text-[11px] text-[#527065]">
+              <span
+                :if={process.availability}
+                class="inline-flex items-center gap-1.5 rounded-full bg-white px-2 py-1 ring-1 ring-[#183128]/8"
+              >
+                <span class={[
+                  "size-1.5 rounded-full",
+                  category_color(process.availability.display_category)
+                ]}></span>
+                {category_label(process.availability.display_category)}
+              </span>
+              <span>{process.state_code}</span>
+              <span :if={process.area_ha}>{process.area_ha} ha</span>
+            </div>
+          </.link>
+        </div>
+      </aside>
+
+      <section class="relative min-h-[48vh] overflow-hidden bg-[#dce4df] lg:min-h-0">
+        <div
+          id="mining-map"
+          phx-hook="MiningMap"
+          phx-update="ignore"
+          data-style-url={@map_style_url}
+          data-states-url-template={@states_geojson_url_template}
+          data-tile-url="/tiles/{z}/{x}/{y}"
+          class="absolute inset-0"
+        >
+          <div
+            class="absolute inset-0 grid place-items-center bg-[#dce4df] text-sm text-[#527065]"
+            data-map-loading
+          >
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 shadow-lg">
+              <.icon name="hero-arrow-path" class="size-4 animate-spin text-[#ff5d39]" />
+              Carregando território…
+            </span>
+          </div>
+        </div>
+
+        <div class="pointer-events-none absolute top-4 right-4 z-10 hidden rounded-xl bg-[#183128]/90 px-3 py-2 font-mono text-[10px] tracking-wide text-white shadow-xl backdrop-blur sm:block">
+          Clique em uma área para inspecionar
+        </div>
+
+        <div
+          id="map-legend"
+          class="pointer-events-none absolute top-4 left-4 z-10 hidden rounded-2xl border border-white/60 bg-[#fffdf8]/92 p-3 text-[10px] shadow-xl backdrop-blur md:block"
+        >
+          <p class="font-bold tracking-wide uppercase">Situação</p>
+          <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[#527065]">
+            <span class="inline-flex items-center gap-1.5"><i class="size-2 rounded-full bg-emerald-500"></i>Apta</span>
+            <span class="inline-flex items-center gap-1.5"><i class="size-2 rounded-full bg-amber-400"></i>Para análise</span>
+            <span class="inline-flex items-center gap-1.5"><i class="size-2 rounded-full bg-orange-500"></i>Em análise</span>
+            <span class="inline-flex items-center gap-1.5"><i class="size-2 rounded-full bg-stone-400"></i>Não apta</span>
+          </div>
+        </div>
+
+        <article
+          :if={@selected_process}
+          id="process-detail"
+          class="absolute right-3 bottom-3 left-3 z-20 max-h-[78%] overflow-y-auto rounded-[1.5rem] border border-white/60 bg-[#fffdf8]/95 p-5 shadow-[0_24px_80px_rgba(16,35,28,.28)] backdrop-blur-xl sm:left-auto sm:w-[390px] sm:p-6"
+        >
+          <button
+            type="button"
+            id="close-process-detail"
+            phx-click="close_process"
+            aria-label="Fechar detalhes"
+            class="absolute top-4 right-4 grid size-9 place-items-center rounded-full border border-[#183128]/10 bg-white transition hover:rotate-6 hover:border-[#183128]/30"
+          >
+            <.icon name="hero-x-mark" class="size-4" />
+          </button>
+          <p class="font-mono text-[10px] tracking-[.18em] text-[#ff5d39] uppercase">
+            Processo minerário
+          </p>
+          <h2 class="font-display mt-2 text-3xl font-semibold">
+            {@selected_process.process_number}
+          </h2>
+          <p class="mt-1 pr-10 text-sm font-semibold">
+            {Enum.join(@selected_process.municipalities, ", ")} · {@selected_process.state_code}
+          </p>
+
+          <dl class="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#183128]/10 bg-[#183128]/10 text-sm">
+            <div class="bg-white p-3">
+              <dt class="text-[10px] tracking-wide text-[#527065] uppercase">Área</dt><dd class="mt-1 font-semibold">
+                {@selected_process.area_ha || "—"} ha
+              </dd>
+            </div>
+            <div class="bg-white p-3">
+              <dt class="text-[10px] tracking-wide text-[#527065] uppercase">Fase</dt><dd class="mt-1 font-semibold">
+                {@selected_process.phase || "—"}
+              </dd>
+            </div>
+            <div class="col-span-2 bg-white p-3">
+              <dt class="text-[10px] tracking-wide text-[#527065] uppercase">Substâncias</dt><dd class="mt-1 font-semibold">
+                {Enum.join(@selected_process.substances, ", ") |> blank_fallback()}
+              </dd>
+            </div>
+            <div class="col-span-2 bg-white p-3">
+              <dt class="text-[10px] tracking-wide text-[#527065] uppercase">Último evento</dt><dd class="mt-1 font-semibold">
+                {@selected_process.last_event || "—"}
+              </dd>
+            </div>
+          </dl>
+
+          <div :if={@selected_process.availability} class="mt-4 rounded-2xl bg-[#f4f1e9] p-4">
+            <p class="text-[10px] tracking-wide text-[#527065] uppercase">Situação oficial</p>
+            <p class="mt-1 font-semibold">
+              {@selected_process.availability.latest_edital_status_raw ||
+                @selected_process.availability.stock_status_raw}
+            </p>
+            <p class="mt-1 text-xs leading-5 text-[#527065]">
+              Categoria de navegação: {category_label(
+                @selected_process.availability.display_category
+              )} · Regime: {@selected_process.availability.availability_regime || "não informado"}.
+            </p>
+            <p class="mt-1 text-[10px] text-[#789087]">
+              Fonte observada em {Calendar.strftime(
+                @selected_process.availability.source_observed_at,
+                "%d/%m/%Y às %H:%M UTC"
+              )}
+            </p>
+          </div>
+
+          <div
+            :if={@selected_process.round_areas != []}
+            id="round-history"
+            class="mt-4 rounded-2xl border border-[#183128]/10 bg-white p-4"
+          >
+            <p class="text-[10px] tracking-wide text-[#527065] uppercase">Histórico de rodadas</p>
+            <div
+              :for={area <- @selected_process.round_areas}
+              class="mt-2 border-t border-[#183128]/10 pt-2 text-xs first:border-0 first:pt-0"
+            >
+              <p class="font-semibold">{area.round.title} · Área {area.area_number}</p>
+              <p class="mt-0.5 text-[#527065]">{area.situation_raw} · {area.modality}</p>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-[1fr_auto] gap-2">
+            <button
+              :if={!@watched?}
+              type="button"
+              id="watch-process"
+              phx-click="watch"
+              class="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#ff5d39] px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#ee4927]"
+            >
+              <.icon name="hero-bell" class="size-4" /> Acompanhar mudanças
+            </button>
+            <button
+              :if={@watched?}
+              type="button"
+              id="unwatch-process"
+              phx-click="unwatch"
+              class="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#183128] px-4 text-sm font-bold text-white transition hover:-translate-y-0.5"
+            >
+              <.icon name="hero-check" class="size-4" /> Acompanhando
+            </button>
+            <a
+              href={official_process_url(@selected_process.process_number)}
+              target="_blank"
+              rel="noreferrer"
+              class="grid size-11 place-items-center rounded-xl border border-[#183128]/15 bg-white transition hover:border-[#183128]/40"
+              title="Abrir fonte oficial ANM"
+            >
+              <.icon name="hero-arrow-top-right-on-square" class="size-4" />
+            </a>
+          </div>
+          <p class="mt-4 text-[10px] leading-4 text-[#789087]">
+            Informação de apoio. Consulte sempre o
+            <a
+              href="https://sople.anm.gov.br/portalpublico"
+              target="_blank"
+              rel="noreferrer"
+              class="font-semibold underline underline-offset-2"
+            >SOPLE oficial</a>
+            e o processo da ANM para efeitos legais.
+          </p>
+        </article>
+      </section>
+    </div>
+  </div>
+</Layouts.app>

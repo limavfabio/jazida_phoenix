@@ -1,14 +1,28 @@
 import Config
 
+database_connection_options =
+  case System.get_env("DATABASE_SOCKET_DIR") do
+    nil ->
+      [
+        hostname: System.get_env("DATABASE_HOST", "localhost"),
+        port: String.to_integer(System.get_env("DATABASE_PORT", "5432"))
+      ]
+
+    socket_dir ->
+      [socket_dir: socket_dir]
+  end
+
 # Configure your database
-config :jazida_phoenix, JazidaPhoenix.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "jazida_phoenix_dev",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+config :jazida_phoenix,
+       JazidaPhoenix.Repo,
+       [
+         username: System.get_env("DATABASE_USER", "postgres"),
+         password: System.get_env("DATABASE_PASSWORD", "postgres"),
+         database: System.get_env("DATABASE_NAME", "jazida_phoenix_dev"),
+         stacktrace: true,
+         show_sensitive_data_on_connection_error: true,
+         pool_size: 10
+       ] ++ database_connection_options
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

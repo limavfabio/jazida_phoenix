@@ -1,0 +1,62 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "PROCESSO": "844001/2022",
+        "NUMERO": 844001,
+        "ANO": 2022,
+        "AREA_HA": 21.54,
+        "FASE": "LICENCIAMENTO",
+        "ULT_EVENTO": "EXIGÊNCIA PUBLICADA EM 01/07/2026",
+        "SUBS": "AREIA",
+        "USO": "Construção civil",
+        "UF": "AL",
+        "DSProcesso": "844.001/2022"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-36.2, -9.2], [-36.1, -9.2], [-36.1, -9.1], [-36.2, -9.1], [-36.2, -9.2]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "PROCESSO": "811171/2016",
+        "NUMERO": 811171,
+        "ANO": 2016,
+        "AREA_HA": 48.38,
+        "FASE": "DISPONIBILIDADE",
+        "ULT_EVENTO": "ÁREA LIVRE EM 23/07/2024",
+        "SUBS": "AREIA; ARGILA",
+        "USO": "Construção civil; Cerâmica vermelha",
+        "UF": "RS",
+        "DSProcesso": "811.171/2016"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[-51.5, -30.0], [-51.4, -30.0], [-51.4, -29.9], [-51.5, -29.9], [-51.5, -30.0]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "PROCESSO": "300091/2020",
+        "NUMERO": 300091,
+        "ANO": 2020,
+        "AREA_HA": 10.13,
+        "FASE": "DISPONIBILIDADE",
+        "ULT_EVENTO": "GEOMETRIA DE TESTE INVÁLIDA",
+        "SUBS": "NÃO SE APLICA",
+        "USO": "Não se aplica",
+        "UF": "MG",
+        "DSProcesso": "300.091/2020"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-43.8, -18.0], [-43.7, -17.9], [-43.8, -17.9], [-43.7, -18.0], [-43.8, -18.0]]]
+      }
+    }
+  ]
+}
