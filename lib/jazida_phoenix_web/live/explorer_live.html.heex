@@ -206,6 +206,7 @@
           phx-hook="MiningMap"
           phx-update="ignore"
           data-style-url={@map_style_url}
+          data-satellite-tilejson-url={@satellite_tilejson_url}
           data-states-url-template={@states_geojson_url_template}
           data-tile-url="/tiles/{z}/{x}/{y}"
           class="absolute inset-0"
@@ -221,8 +222,129 @@
           </div>
         </div>
 
-        <div class="pointer-events-none absolute top-4 right-4 z-10 hidden rounded-xl bg-[#183128]/90 px-3 py-2 font-mono text-[10px] tracking-wide text-white shadow-xl backdrop-blur sm:block">
-          Clique em uma área para inspecionar
+        <div data-map-layers class="absolute top-4 right-4 z-10 flex flex-col items-end">
+          <button
+            type="button"
+            id="map-layers-toggle"
+            data-map-layers-toggle
+            aria-expanded="false"
+            aria-controls="map-layers-panel"
+            class="grid size-11 place-items-center rounded-2xl border border-white/70 bg-[#fffdf8]/95 text-[#183128] shadow-[0_12px_35px_rgba(24,49,40,.18)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[#183128]/20 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff5d39]"
+          >
+            <span class="sr-only">Configurar camadas do mapa</span>
+            <.icon name="hero-square-3-stack-3d" class="size-5" />
+          </button>
+
+          <div
+            id="map-layers-panel"
+            data-map-layers-panel
+            hidden
+            class="mt-2 w-[min(18rem,calc(100vw-2rem))] rounded-[1.4rem] border border-white/70 bg-[#fffdf8]/96 p-4 text-[#183128] shadow-[0_22px_65px_rgba(16,35,28,.24)] backdrop-blur-xl"
+          >
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-mono text-[9px] tracking-[.2em] text-[#ff5d39] uppercase">
+                  Cartografia
+                </p>
+                <h2 class="font-display mt-1 text-xl font-semibold">Camadas</h2>
+              </div>
+              <span
+                data-map-layer-status
+                class="max-w-28 text-right text-[10px] leading-tight text-[#527065]"
+                role="status"
+              ></span>
+            </div>
+
+            <fieldset class="mt-4">
+              <legend class="text-[10px] font-bold tracking-wider uppercase">Mapa base</legend>
+              <div class="mt-2 grid grid-cols-2 rounded-xl bg-[#e9e5dc] p-1">
+                <button
+                  type="button"
+                  id="basemap-street"
+                  data-basemap="street"
+                  aria-pressed="true"
+                  class="rounded-lg px-3 py-2 text-xs font-semibold transition aria-pressed:bg-[#183128] aria-pressed:text-white aria-pressed:shadow-sm"
+                >
+                  Ruas
+                </button>
+                <button
+                  :if={@satellite_tilejson_url}
+                  type="button"
+                  id="basemap-satellite"
+                  data-basemap="satellite"
+                  aria-pressed="false"
+                  class="rounded-lg px-3 py-2 text-xs font-semibold transition aria-pressed:bg-[#183128] aria-pressed:text-white aria-pressed:shadow-sm"
+                >
+                  Satélite
+                </button>
+              </div>
+            </fieldset>
+
+            <fieldset class="mt-5 space-y-3 border-t border-[#183128]/10 pt-4">
+              <legend class="sr-only">Camadas de dados</legend>
+              <label
+                for="map-layer-mining"
+                class="flex cursor-pointer items-center justify-between gap-3 text-xs font-semibold"
+              >
+                Áreas minerárias
+                <span class="relative inline-flex h-6 w-10 shrink-0 items-center">
+                  <input
+                    id="map-layer-mining"
+                    data-layer-toggle="mining"
+                    type="checkbox"
+                    checked
+                    class="peer sr-only"
+                  />
+                  <span class="absolute inset-0 rounded-full bg-[#c9c7bf] transition peer-checked:bg-[#ff5d39]"></span>
+                  <span class="relative ml-1 size-4 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></span>
+                </span>
+              </label>
+              <label
+                for="map-layer-states"
+                class="flex cursor-pointer items-center justify-between gap-3 text-xs font-semibold"
+              >
+                Marcações estaduais
+                <span class="relative inline-flex h-6 w-10 shrink-0 items-center">
+                  <input
+                    id="map-layer-states"
+                    data-layer-toggle="states"
+                    type="checkbox"
+                    checked
+                    class="peer sr-only"
+                  />
+                  <span class="absolute inset-0 rounded-full bg-[#c9c7bf] transition peer-checked:bg-[#31584b]"></span>
+                  <span class="relative ml-1 size-4 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></span>
+                </span>
+              </label>
+            </fieldset>
+
+            <div
+              data-mining-opacity-control
+              class="mt-4 border-t border-[#183128]/10 pt-4 transition"
+            >
+              <div class="flex items-center justify-between gap-3">
+                <label
+                  for="map-mining-opacity"
+                  class="text-[10px] font-bold tracking-wider uppercase"
+                >Opacidade das áreas</label>
+                <output
+                  data-mining-opacity-output
+                  for="map-mining-opacity"
+                  class="font-mono text-[10px] text-[#527065]"
+                >100%</output>
+              </div>
+              <input
+                id="map-mining-opacity"
+                data-mining-opacity
+                type="range"
+                min="30"
+                max="100"
+                step="5"
+                value="100"
+                class="mt-2 h-1.5 w-full cursor-pointer accent-[#ff5d39] disabled:cursor-not-allowed"
+              />
+            </div>
+          </div>
         </div>
 
         <div

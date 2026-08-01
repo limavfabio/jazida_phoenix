@@ -1,5 +1,8 @@
 import Config
 
+config :jazida_phoenix, :mining,
+  satellite_tilejson_url: "https://tiles.example.test/satellite/tiles.json"
+
 # Only in tests, remove the complexity from the password hashing algorithm
 config :argon2_elixir, t_cost: 1, m_cost: 8
 

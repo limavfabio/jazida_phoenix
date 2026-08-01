@@ -19,6 +19,12 @@ defmodule JazidaPhoenixWeb.ExplorerLiveTest do
     assert has_element?(view, "#explorer-filter-form")
     assert has_element?(view, "#mining-map[phx-hook='MiningMap'][phx-update='ignore']")
     assert has_element?(view, "#mining-map[data-states-url-template*='servicodados.ibge.gov.br']")
+    assert has_element?(view, "#mining-map[data-satellite-tilejson-url*='tiles.example.test']")
+    assert has_element?(view, "#map-layers-toggle[aria-controls='map-layers-panel']")
+    assert has_element?(view, "#map-layer-mining[checked]")
+    assert has_element?(view, "#map-layer-states[checked]")
+    assert has_element?(view, "#map-mining-opacity[type='range']")
+    assert has_element?(view, "#basemap-satellite")
     assert has_element?(view, "#process-results a[href*='process=#{process.id}']")
 
     view

@@ -42,6 +42,7 @@ config :jazida_phoenix, Oban,
 config :jazida_phoenix, :mining,
   timezone: "America/Sao_Paulo",
   map_style_url: "https://demotiles.maplibre.org/style.json",
+  satellite_tilejson_url: nil,
   states_geojson_url_template:
     "https://servicodados.ibge.gov.br/api/v3/malhas/estados/{state}?formato=application/vnd.geo+json&qualidade=minima",
   stale_after_hours: 48,

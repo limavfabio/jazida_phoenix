@@ -13,6 +13,7 @@ defmodule JazidaPhoenixWeb.ExplorerLive do
      socket
      |> assign(:page_title, "Explore oportunidades minerais")
      |> assign(:map_style_url, mining_config[:map_style_url])
+     |> assign(:satellite_tilejson_url, mining_config[:satellite_tilejson_url])
      |> assign(:states_geojson_url_template, mining_config[:states_geojson_url_template])
      |> assign(:selected_process, nil)
      |> assign(:watched?, false)

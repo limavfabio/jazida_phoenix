@@ -29,6 +29,8 @@ config :jazida_phoenix,
        :mining,
        Keyword.merge(mining_config,
          map_style_url: System.get_env("MAP_STYLE_URL", mining_config[:map_style_url]),
+         satellite_tilejson_url:
+           System.get_env("SATELLITE_TILEJSON_URL", mining_config[:satellite_tilejson_url]),
          states_geojson_url_template:
            System.get_env(
              "STATES_GEOJSON_URL_TEMPLATE",
@@ -74,6 +76,12 @@ if config_env() == :prod do
 
   unless URI.parse(map_style_url).scheme == "https" do
     raise "MAP_STYLE_URL must use HTTPS in production"
+  end
+
+  if satellite_tilejson_url = System.get_env("SATELLITE_TILEJSON_URL") do
+    unless URI.parse(satellite_tilejson_url).scheme == "https" do
+      raise "SATELLITE_TILEJSON_URL must use HTTPS in production"
+    end
   end
 
   if is_nil(System.find_executable("ogr2ogr")) do

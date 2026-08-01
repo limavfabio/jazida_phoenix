@@ -53,6 +53,7 @@ Production startup validates the settings it cannot safely infer:
 
 - `DATABASE_URL`, `SECRET_KEY_BASE`, `PHX_HOST`
 - `MAP_STYLE_URL` — HTTPS MapLibre style
+- `SATELLITE_TILEJSON_URL` — optional HTTPS TileJSON endpoint for the satellite basemap; any token in this browser-visible URL must be public and domain-restricted
 - `RESEND_API_KEY` and `EMAIL_FROM`
 - `ogr2ogr` available on `PATH`, and a PostgreSQL database where migrations may enable PostGIS
 
