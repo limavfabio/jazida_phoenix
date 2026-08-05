@@ -59,6 +59,7 @@ RUN groupadd --system jazida \
     && useradd --system --gid jazida --home-dir /app --shell /usr/sbin/nologin jazida
 
 COPY --from=build --chown=jazida:jazida /app/_build/prod/rel/jazida_phoenix ./
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 
 LABEL org.opencontainers.image.source="https://github.com/limavfabio/jazida_phoenix"
 
@@ -66,4 +67,5 @@ USER jazida
 
 EXPOSE 4000
 
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
 CMD ["bin/jazida_phoenix", "start"]
