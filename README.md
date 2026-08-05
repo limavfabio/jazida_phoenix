@@ -58,3 +58,16 @@ Production startup validates the settings it cannot safely infer:
 - `ogr2ogr` available on `PATH`, and a PostgreSQL database where migrations may enable PostGIS
 
 Swoosh uses its included Req API client and the Resend adapter. Secrets are never passed through shell command construction. See `docs/ANM_DATA_CONTRACT.md` for source assumptions and measured geometry coverage.
+
+## Container image
+
+The production image is built locally with Podman and published only to GitHub Container Registry. Authenticate once, then run the Mix task:
+
+```sh
+gh auth token | podman login ghcr.io --username limavfabio --password-stdin
+mix jazida.container.publish
+```
+
+The task builds `Dockerfile` locally and pushes both the immutable 12-character Git revision tag and `latest` to `ghcr.io/limavfabio/jazida_phoenix`. Override either value with `--image` or `--tag`; run `mix help jazida.container.publish` for the task summary.
+
+At runtime, pass the production variables listed above and publish container port `4000`. Run database migrations as an explicit deployment step before starting a new application version.
