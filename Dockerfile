@@ -60,7 +60,7 @@ RUN groupadd --system jazida \
 
 COPY --from=build --chown=jazida:jazida /app/_build/prod/rel/jazida_phoenix ./
 
-LABEL org.opencontainers.image.source="https://github.com/Norte-Brasil-Digital/jazida_phoenix"
+LABEL org.opencontainers.image.source="https://github.com/limavfabio/jazida_phoenix"
 
 USER jazida
 

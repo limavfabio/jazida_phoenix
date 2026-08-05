@@ -13,7 +13,7 @@ defmodule Mix.Tasks.Jazida.Container.Publish do
 
   @shortdoc "Builds the container locally and publishes it to GHCR"
 
-  @default_image "ghcr.io/norte-brasil-digital/jazida_phoenix"
+  @default_image "ghcr.io/limavfabio/jazida_phoenix"
   @switches [image: :string, tag: :string]
 
   @impl Mix.Task
