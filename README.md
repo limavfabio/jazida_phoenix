@@ -61,13 +61,12 @@ Swoosh uses its included Req API client and the Resend adapter. Secrets are neve
 
 ## Container image
 
-The production image is built locally with Podman and published only to GitHub Container Registry. Authenticate once, then run the Mix task:
+Every push to `master` builds the production image on GitHub's native ARM64 runner and publishes it only to GitHub Container Registry:
 
 ```sh
-gh auth token | podman login ghcr.io --username limavfabio --password-stdin
-mix jazida.container.publish
+podman pull ghcr.io/limavfabio/jazida_phoenix:latest
 ```
 
-The task builds `Dockerfile` locally and pushes both the immutable 12-character Git revision tag and `latest` to `ghcr.io/limavfabio/jazida_phoenix`. Override either value with `--image` or `--tag`; run `mix help jazida.container.publish` for the task summary.
+The workflow publishes `linux/arm64` as both `latest` and an immutable full Git revision tag. The package is public, so deployments do not need registry credentials to pull it.
 
 At runtime, pass the production variables listed above and publish container port `4000`. Run database migrations as an explicit deployment step before starting a new application version.
