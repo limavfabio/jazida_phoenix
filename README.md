@@ -11,17 +11,17 @@ Public, map-first explorer for ANM mining opportunities, with authenticated watc
 
 On Fedora, install the native services with `sudo dnf install postgresql-server postgis gdal`. On Debian/Ubuntu, use `postgresql postgresql-postgis gdal-bin` (package names can vary by PostgreSQL release).
 
-The repository does not assume a `postgres` password. Unix-socket development is supported:
+When PostgreSQL is running on its standard Unix socket, development and test automatically use the current OS user with peer authentication and no password:
 
 ```sh
-DATABASE_USER="$USER" DATABASE_PASSWORD= DATABASE_SOCKET_DIR=/var/run/postgresql mix setup
-DATABASE_USER="$USER" DATABASE_PASSWORD= DATABASE_SOCKET_DIR=/var/run/postgresql mix phx.server
+mix setup
+mix phx.server
 ```
 
-TCP connections use `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_USER`, `DATABASE_PASSWORD`, and `DATABASE_NAME`. Run `npm install --prefix assets` when the lockfile changes. The final local gate is:
+Set `DATABASE_URL` to override the complete connection, or use `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_USER`, `DATABASE_PASSWORD`, `DATABASE_NAME`, and `DATABASE_SOCKET_DIR` individually. Phoenix does not load `.env` files automatically; use shell exports or a tool such as `direnv` if environment-file loading is desired. Run `npm install --prefix assets` when the lockfile changes. The final local gate is:
 
 ```sh
-DATABASE_USER="$USER" DATABASE_PASSWORD= DATABASE_SOCKET_DIR=/var/run/postgresql mix precommit
+mix precommit
 ```
 
 ## Source synchronization

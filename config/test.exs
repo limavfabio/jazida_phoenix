@@ -6,8 +6,14 @@ config :jazida_phoenix, :mining,
 # Only in tests, remove the complexity from the password hashing algorithm
 config :argon2_elixir, t_cost: 1, m_cost: 8
 
+default_socket_dir = "/var/run/postgresql"
+
+database_socket_dir =
+  System.get_env("DATABASE_SOCKET_DIR") ||
+    if File.exists?(Path.join(default_socket_dir, ".s.PGSQL.5432")), do: default_socket_dir
+
 database_connection_options =
-  case System.get_env("DATABASE_SOCKET_DIR") do
+  case database_socket_dir do
     nil ->
       [
         hostname: System.get_env("DATABASE_HOST", "localhost"),
@@ -18,6 +24,28 @@ database_connection_options =
       [socket_dir: socket_dir]
   end
 
+database_options =
+  case System.get_env("DATABASE_URL") do
+    nil ->
+      default_username =
+        if database_socket_dir, do: System.get_env("USER", "postgres"), else: "postgres"
+
+      default_password = if database_socket_dir, do: "", else: "postgres"
+
+      [
+        username: System.get_env("DATABASE_USER", default_username),
+        password: System.get_env("DATABASE_PASSWORD", default_password),
+        database:
+          System.get_env(
+            "DATABASE_NAME",
+            "jazida_phoenix_test#{System.get_env("MIX_TEST_PARTITION")}"
+          )
+      ] ++ database_connection_options
+
+    url ->
+      [url: url]
+  end
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -25,17 +53,11 @@ database_connection_options =
 # Run `mix help test` for more information.
 config :jazida_phoenix,
        JazidaPhoenix.Repo,
-       [
-         username: System.get_env("DATABASE_USER", "postgres"),
-         password: System.get_env("DATABASE_PASSWORD", "postgres"),
-         database:
-           System.get_env(
-             "DATABASE_NAME",
-             "jazida_phoenix_test#{System.get_env("MIX_TEST_PARTITION")}"
-           ),
-         pool: Ecto.Adapters.SQL.Sandbox,
-         pool_size: System.schedulers_online() * 2
-       ] ++ database_connection_options
+       database_options ++
+         [
+           pool: Ecto.Adapters.SQL.Sandbox,
+           pool_size: System.schedulers_online() * 2
+         ]
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.

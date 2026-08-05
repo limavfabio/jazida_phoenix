@@ -1,7 +1,13 @@
 import Config
 
+default_socket_dir = "/var/run/postgresql"
+
+database_socket_dir =
+  System.get_env("DATABASE_SOCKET_DIR") ||
+    if File.exists?(Path.join(default_socket_dir, ".s.PGSQL.5432")), do: default_socket_dir
+
 database_connection_options =
-  case System.get_env("DATABASE_SOCKET_DIR") do
+  case database_socket_dir do
     nil ->
       [
         hostname: System.get_env("DATABASE_HOST", "localhost"),
@@ -12,17 +18,33 @@ database_connection_options =
       [socket_dir: socket_dir]
   end
 
+database_options =
+  case System.get_env("DATABASE_URL") do
+    nil ->
+      default_username =
+        if database_socket_dir, do: System.get_env("USER", "postgres"), else: "postgres"
+
+      default_password = if database_socket_dir, do: "", else: "postgres"
+
+      [
+        username: System.get_env("DATABASE_USER", default_username),
+        password: System.get_env("DATABASE_PASSWORD", default_password),
+        database: System.get_env("DATABASE_NAME", "jazida_phoenix_dev")
+      ] ++ database_connection_options
+
+    url ->
+      [url: url]
+  end
+
 # Configure your database
 config :jazida_phoenix,
        JazidaPhoenix.Repo,
-       [
-         username: System.get_env("DATABASE_USER", "postgres"),
-         password: System.get_env("DATABASE_PASSWORD", "postgres"),
-         database: System.get_env("DATABASE_NAME", "jazida_phoenix_dev"),
-         stacktrace: true,
-         show_sensitive_data_on_connection_error: true,
-         pool_size: 10
-       ] ++ database_connection_options
+       database_options ++
+         [
+           stacktrace: true,
+           show_sensitive_data_on_connection_error: true,
+           pool_size: 10
+         ]
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
