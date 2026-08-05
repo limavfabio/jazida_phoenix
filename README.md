@@ -68,6 +68,6 @@ gh auth token | podman login ghcr.io --username limavfabio --password-stdin
 mix jazida.container.publish
 ```
 
-The task builds `Dockerfile` locally and pushes both the immutable 12-character Git revision tag and `latest` to `ghcr.io/limavfabio/jazida_phoenix`. Override either value with `--image` or `--tag`; run `mix help jazida.container.publish` for the task summary.
+The task builds `Dockerfile` locally and pushes both the immutable 12-character Git revision tag and `latest` to `ghcr.io/norte-brasil-digital/jazida_phoenix`. Override either value with `--image` or `--tag`; run `mix help jazida.container.publish` for the task summary.
 
 At runtime, pass the production variables listed above and publish container port `4000`. Run database migrations as an explicit deployment step before starting a new application version.
