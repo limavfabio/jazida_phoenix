@@ -7,8 +7,8 @@ defmodule JazidaPhoenixWeb.UserLive.Login do
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <div class="mx-auto max-w-sm space-y-4 px-4 py-16">
-        <div class="text-center">
+      <div class="mx-auto max-w-sm space-y-4 px-4 py-12 sm:py-16">
+        <div>
           <.header>
             <p>Entrar</p>
             <:subtitle>
@@ -17,7 +17,7 @@ defmodule JazidaPhoenixWeb.UserLive.Login do
               <% else %>
                 Ainda não tem conta? <.link
                   navigate={~p"/users/register"}
-                  class="font-semibold text-[#ff5d39] hover:underline"
+                  class="font-semibold text-[#1d5b45] hover:underline"
                   phx-no-format
                 >Cadastre-se</.link> agora.
               <% end %>
@@ -27,7 +27,7 @@ defmodule JazidaPhoenixWeb.UserLive.Login do
 
         <div
           :if={local_mail_adapter?()}
-          class="flex gap-3 rounded-xl border border-cyan-700/15 bg-cyan-50 p-4 text-sm text-cyan-950"
+          class="flex gap-3 rounded-md border border-cyan-700/15 bg-cyan-50 p-4 text-sm text-cyan-950"
         >
           <.icon name="hero-information-circle" class="size-6 shrink-0" />
           <div>
@@ -57,13 +57,13 @@ defmodule JazidaPhoenixWeb.UserLive.Login do
           />
           <.button
             variant="primary"
-            class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#ff5d39] px-4 text-sm font-bold text-white transition hover:bg-[#ee4927]"
+            class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#1d5b45] px-4 text-sm font-semibold text-white transition hover:bg-[#174936]"
           >
             Entrar por e-mail <span aria-hidden="true">→</span>
           </.button>
         </.form>
 
-        <div class="flex items-center gap-3 py-2 text-xs text-[#789087] before:h-px before:flex-1 before:bg-[#183128]/10 after:h-px after:flex-1 after:bg-[#183128]/10">
+        <div class="flex items-center gap-3 py-2 text-xs text-[#8a928d] before:h-px before:flex-1 before:bg-[#dfe3df] after:h-px after:flex-1 after:bg-[#dfe3df]">
           ou
         </div>
 
@@ -93,13 +93,13 @@ defmodule JazidaPhoenixWeb.UserLive.Login do
           />
           <.button
             variant="primary"
-            class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#ff5d39] px-4 text-sm font-bold text-white transition hover:bg-[#ee4927]"
+            class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#1d5b45] px-4 text-sm font-semibold text-white transition hover:bg-[#174936]"
             name={@form[:remember_me].name}
             value="true"
           >
             Entrar e manter conectado <span aria-hidden="true">→</span>
           </.button>
-          <.button class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-[#183128]/15 bg-white px-4 text-sm font-bold transition hover:border-[#183128]/40">
+          <.button class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-md border border-[#cfd5d0] bg-white px-4 text-sm font-semibold transition hover:bg-[#f0f2f0]">
             Entrar somente desta vez
           </.button>
         </.form>

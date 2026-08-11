@@ -9,7 +9,7 @@ defmodule JazidaPhoenixWeb.UserLive.Settings do
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <div class="mx-auto max-w-xl px-4 pt-16 text-center">
+      <div class="mx-auto max-w-xl px-4 pt-12">
         <.header>
           Configurações da conta
           <:subtitle>Gerencie seu e-mail e sua senha</:subtitle>
@@ -21,7 +21,7 @@ defmodule JazidaPhoenixWeb.UserLive.Settings do
         id="email_form"
         phx-submit="update_email"
         phx-change="validate_email"
-        class="mx-auto mt-8 max-w-xl rounded-2xl bg-white p-6 shadow-sm"
+        class="mx-auto mt-6 max-w-xl border-t border-[#dfe3df] px-4 pt-6"
       >
         <.input
           field={@email_form[:email]}
@@ -34,8 +34,6 @@ defmodule JazidaPhoenixWeb.UserLive.Settings do
         <.button variant="primary" phx-disable-with="Alterando...">Alterar e-mail</.button>
       </.form>
 
-      <div class="mx-auto my-8 h-px max-w-xl bg-[#183128]/10" />
-
       <.form
         for={@password_form}
         id="password_form"
@@ -44,7 +42,7 @@ defmodule JazidaPhoenixWeb.UserLive.Settings do
         phx-change="validate_password"
         phx-submit="update_password"
         phx-trigger-action={@trigger_submit}
-        class="mx-auto max-w-xl rounded-2xl bg-white p-6 shadow-sm"
+        class="mx-auto mt-8 max-w-xl border-t border-[#dfe3df] px-4 pt-6"
       >
         <input
           name={@password_form[:email].name}

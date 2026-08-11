@@ -7,8 +7,8 @@ defmodule JazidaPhoenixWeb.UserLive.Confirmation do
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <div class="mx-auto max-w-sm px-4 py-16">
-        <div class="text-center">
+      <div class="mx-auto max-w-sm px-4 py-12 sm:py-16">
+        <div>
           <.header>Bem-vindo, {@user.email}</.header>
         </div>
 
@@ -26,13 +26,13 @@ defmodule JazidaPhoenixWeb.UserLive.Confirmation do
             name={@form[:remember_me].name}
             value="true"
             phx-disable-with="Confirmando..."
-            class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#ff5d39] px-4 text-sm font-bold text-white transition hover:bg-[#ee4927]"
+            class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#1d5b45] px-4 text-sm font-semibold text-white transition hover:bg-[#174936]"
           >
             Confirmar e manter conectado
           </.button>
           <.button
             phx-disable-with="Confirmando..."
-            class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-[#183128]/15 bg-white px-4 text-sm font-bold transition hover:border-[#183128]/40"
+            class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-md border border-[#cfd5d0] bg-white px-4 text-sm font-semibold transition hover:bg-[#f0f2f0]"
           >
             Confirmar e entrar somente desta vez
           </.button>
@@ -51,7 +51,7 @@ defmodule JazidaPhoenixWeb.UserLive.Confirmation do
           <%= if @current_scope do %>
             <.button
               phx-disable-with="Entrando..."
-              class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#ff5d39] px-4 text-sm font-bold text-white transition hover:bg-[#ee4927]"
+              class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#1d5b45] px-4 text-sm font-semibold text-white transition hover:bg-[#174936]"
             >
               Entrar
             </.button>
@@ -60,13 +60,13 @@ defmodule JazidaPhoenixWeb.UserLive.Confirmation do
               name={@form[:remember_me].name}
               value="true"
               phx-disable-with="Entrando..."
-              class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#ff5d39] px-4 text-sm font-bold text-white transition hover:bg-[#ee4927]"
+              class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#1d5b45] px-4 text-sm font-semibold text-white transition hover:bg-[#174936]"
             >
               Manter conectado neste dispositivo
             </.button>
             <.button
               phx-disable-with="Entrando..."
-              class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-[#183128]/15 bg-white px-4 text-sm font-bold transition hover:border-[#183128]/40"
+              class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-md border border-[#cfd5d0] bg-white px-4 text-sm font-semibold transition hover:bg-[#f0f2f0]"
             >
               Entrar somente desta vez
             </.button>
@@ -75,7 +75,7 @@ defmodule JazidaPhoenixWeb.UserLive.Confirmation do
 
         <p
           :if={!@user.confirmed_at}
-          class="mt-8 rounded-xl border border-[#183128]/15 bg-white p-4 text-sm text-[#527065]"
+          class="mt-8 rounded-md border border-[#dfe3df] bg-white p-4 text-sm text-[#69726c]"
         >
           Dica: se preferir, você pode definir uma senha nas configurações da conta.
         </p>

@@ -8,13 +8,13 @@ defmodule JazidaPhoenixWeb.UserLive.Registration do
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <div class="mx-auto max-w-sm px-4 py-16">
-        <div class="text-center">
+      <div class="mx-auto max-w-sm px-4 py-12 sm:py-16">
+        <div>
           <.header>
             Crie sua conta
             <:subtitle>
               Já tem cadastro?
-              <.link navigate={~p"/users/log-in"} class="font-semibold text-[#ff5d39] hover:underline">
+              <.link navigate={~p"/users/log-in"} class="font-semibold text-[#1d5b45] hover:underline">
                 Entre
               </.link>
               agora.
@@ -36,7 +36,7 @@ defmodule JazidaPhoenixWeb.UserLive.Registration do
           <.button
             phx-disable-with="Criando conta..."
             variant="primary"
-            class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#ff5d39] px-4 text-sm font-bold text-white transition hover:bg-[#ee4927]"
+            class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#1d5b45] px-4 text-sm font-semibold text-white transition hover:bg-[#174936]"
           >
             Criar conta
           </.button>

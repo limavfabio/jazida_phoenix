@@ -62,7 +62,7 @@ defmodule JazidaPhoenixWeb.CoreComponents do
       {@rest}
     >
       <div class={[
-        "flex w-80 max-w-[calc(100vw-2rem)] items-start gap-3 rounded-2xl border p-4 text-sm text-white shadow-2xl sm:w-96",
+        "flex w-80 max-w-[calc(100vw-2rem)] items-start gap-3 rounded-lg border p-4 text-sm text-white shadow-lg sm:w-96",
         @kind == :info && "border-emerald-400/20 bg-[#183128]",
         @kind == :error && "border-red-300/30 bg-red-700"
       ]}>
@@ -97,14 +97,14 @@ defmodule JazidaPhoenixWeb.CoreComponents do
 
   def button(%{rest: rest} = assigns) do
     variants = %{
-      "primary" => "bg-[#ff5d39] text-white hover:bg-[#ee4927]",
-      nil => "border border-[#183128]/15 bg-white text-[#183128] hover:border-[#183128]/40"
+      "primary" => "bg-[#1d5b45] text-white hover:bg-[#174936]",
+      nil => "border border-[#cfd5d0] bg-white text-[#1f2823] hover:bg-[#f0f2f0]"
     }
 
     assigns =
       assign_new(assigns, :class, fn ->
         [
-          "inline-flex min-h-11 items-center justify-center rounded-xl px-4 text-sm font-bold transition hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex min-h-11 items-center justify-center rounded-md px-4 text-sm font-semibold transition disabled:pointer-events-none disabled:opacity-50",
           Map.fetch!(variants, assigns[:variant])
         ]
       end)
@@ -229,7 +229,7 @@ defmodule JazidaPhoenixWeb.CoreComponents do
             name={@name}
             value="true"
             checked={@checked}
-            class={@class || "size-4 rounded border-[#183128]/25 accent-[#ff5d39]"}
+            class={@class || "size-4 rounded border-[#cfd5d0] accent-[#1d5b45]"}
             {@rest}
           />{@label}
         </span>
@@ -249,7 +249,7 @@ defmodule JazidaPhoenixWeb.CoreComponents do
           name={@name}
           class={[
             @class ||
-              "h-11 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none transition focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10",
+              "h-11 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm outline-none transition focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10",
             @errors != [] && (@error_class || "border-red-500")
           ]}
           multiple={@multiple}
@@ -274,7 +274,7 @@ defmodule JazidaPhoenixWeb.CoreComponents do
           name={@name}
           class={[
             @class ||
-              "min-h-28 w-full rounded-xl border border-[#183128]/15 bg-white px-3 py-2 text-sm outline-none transition focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10",
+              "min-h-28 w-full rounded-md border border-[#cfd5d0] bg-white px-3 py-2 text-sm outline-none transition focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10",
             @errors != [] && (@error_class || "border-red-500")
           ]}
           {@rest}
@@ -298,7 +298,7 @@ defmodule JazidaPhoenixWeb.CoreComponents do
           value={Phoenix.HTML.Form.normalize_value(@type, @value)}
           class={[
             @class ||
-              "h-11 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none transition placeholder:text-[#789087] focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10",
+              "h-11 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm outline-none transition placeholder:text-[#8a928d] focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10",
             @errors != [] && (@error_class || "border-red-500")
           ]}
           {@rest}
@@ -330,10 +330,10 @@ defmodule JazidaPhoenixWeb.CoreComponents do
     ~H"""
     <header class={[@actions != [] && "flex items-center justify-between gap-6", "pb-4"]}>
       <div>
-        <h1 class="font-display text-3xl leading-8 font-semibold">
+        <h1 class="font-display text-2xl leading-8 font-semibold tracking-tight">
           {render_slot(@inner_block)}
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm text-[#527065]">
+        <p :if={@subtitle != []} class="mt-1.5 text-sm text-[#69726c]">
           {render_slot(@subtitle)}
         </p>
       </div>

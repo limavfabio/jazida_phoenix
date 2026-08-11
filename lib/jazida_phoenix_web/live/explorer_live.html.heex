@@ -1,28 +1,25 @@
 <Layouts.app flash={@flash} current_scope={@current_scope}>
-  <div id="explorer" class="mx-auto max-w-[1600px] px-3 py-3 sm:px-5 sm:py-5">
-    <div class="grid min-h-[calc(100vh-6.5rem)] overflow-hidden rounded-[1.75rem] border border-[#183128]/10 bg-white shadow-[0_24px_80px_rgba(24,49,40,.12)] lg:h-[calc(100vh-6.5rem)] lg:grid-cols-[390px_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
-      <aside class="relative z-20 flex min-h-0 max-h-[52vh] flex-col border-b border-[#183128]/10 bg-[#fffdf8] lg:max-h-full lg:border-r lg:border-b-0">
-        <div class="border-b border-[#183128]/10 p-5 sm:p-6">
-          <p class="font-mono text-[10px] tracking-[.2em] text-[#ff5d39] uppercase">
-            Mapa de oportunidades
-          </p>
-          <h1 class="font-display mt-2 max-w-xs text-[2.35rem] leading-[.96] font-semibold tracking-[-.025em] text-[#183128]">
-            O território mineral, legível.
+  <div id="explorer" class="mx-auto max-w-[1600px] sm:p-4">
+    <div class="grid min-h-[calc(100vh-3.5rem)] overflow-hidden border-[#dfe3df] bg-white sm:rounded-lg sm:border lg:h-[calc(100vh-5.5rem)] lg:grid-cols-[360px_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
+      <aside class="relative z-20 flex min-h-0 max-h-[55vh] flex-col border-b border-[#dfe3df] bg-white lg:max-h-full lg:border-r lg:border-b-0">
+        <div class="border-b border-[#dfe3df] p-4">
+          <h1 class="text-lg font-semibold tracking-tight text-[#1f2823]">
+            Explorar áreas
           </h1>
-          <p class="mt-3 text-sm leading-6 text-[#527065]">
-            Consulte áreas públicas da ANM por processo, lugar e situação oficial.
+          <p class="mt-1 text-sm text-[#69726c]">
+            Consulte processos e áreas públicas da ANM.
           </p>
 
           <.form
             for={@filter_form}
             id="explorer-filter-form"
             phx-change="filter"
-            class="mt-5 space-y-3"
+            class="mt-4 space-y-2"
           >
             <div class="relative">
               <.icon
                 name="hero-magnifying-glass"
-                class="pointer-events-none absolute top-1/2 left-3.5 z-10 size-4 -translate-y-1/2 text-[#527065]"
+                class="pointer-events-none absolute top-1/2 left-3 z-10 size-4 -translate-y-1/2 text-[#69726c]"
               />
               <.input
                 field={@filter_form[:q]}
@@ -30,7 +27,7 @@
                 aria-label="Buscar por processo, município ou substância"
                 placeholder="Processo, município ou substância"
                 phx-debounce="350"
-                class="h-12 w-full rounded-2xl border border-[#183128]/15 bg-white pr-4 pl-10 text-sm text-[#183128] outline-none transition placeholder:text-[#789087] focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                class="h-11 w-full rounded-md border border-[#cfd5d0] bg-white pr-3 pl-9 text-sm text-[#1f2823] outline-none transition placeholder:text-[#8a928d] focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10"
               />
             </div>
             <div class="grid grid-cols-2 gap-2">
@@ -41,7 +38,7 @@
                 maxlength="2"
                 placeholder="UF"
                 phx-debounce="350"
-                class="h-11 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm uppercase outline-none transition focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                class="h-10 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm uppercase outline-none transition focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10"
               />
               <.input
                 field={@filter_form[:category]}
@@ -56,25 +53,25 @@
                   {"Livre", "free"},
                   {"Arrematada", "awarded"}
                 ]}
-                class="h-11 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none transition focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                class="h-10 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm outline-none transition focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10"
               />
             </div>
             <details
               id="advanced-filters"
-              class="group rounded-xl border border-[#183128]/10 bg-white"
+              class="group rounded-md border border-[#dfe3df] bg-white"
             >
-              <summary class="flex cursor-pointer list-none items-center justify-between px-3 py-2.5 text-xs font-semibold text-[#527065]">
-                Mais filtros
+              <summary class="flex cursor-pointer list-none items-center justify-between px-3 py-2.5 text-xs font-medium text-[#69726c]">
+                Filtros avançados
                 <.icon name="hero-chevron-down" class="size-4 transition group-open:rotate-180" />
               </summary>
-              <div class="grid gap-2 border-t border-[#183128]/10 p-3 sm:grid-cols-2 lg:grid-cols-1">
+              <div class="grid gap-2 border-t border-[#dfe3df] p-3 sm:grid-cols-2 lg:grid-cols-1">
                 <.input
                   field={@filter_form[:municipality]}
                   type="text"
                   aria-label="Filtrar por município"
                   placeholder="Município"
                   phx-debounce="350"
-                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                  class="h-10 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm outline-none focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10"
                 />
                 <.input
                   field={@filter_form[:substance]}
@@ -82,7 +79,7 @@
                   aria-label="Filtrar por substância"
                   placeholder="Substância"
                   phx-debounce="350"
-                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                  class="h-10 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm outline-none focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10"
                 />
                 <.input
                   field={@filter_form[:status]}
@@ -90,7 +87,7 @@
                   aria-label="Filtrar por situação oficial"
                   placeholder="Situação oficial"
                   phx-debounce="350"
-                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                  class="h-10 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm outline-none focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10"
                 />
                 <.input
                   field={@filter_form[:regime]}
@@ -98,7 +95,7 @@
                   aria-label="Filtrar por regime"
                   placeholder="Regime"
                   phx-debounce="350"
-                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                  class="h-10 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm outline-none focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10"
                 />
                 <.input
                   field={@filter_form[:round]}
@@ -107,13 +104,13 @@
                   min="1"
                   placeholder="Rodada"
                   phx-debounce="350"
-                  class="h-10 w-full rounded-xl border border-[#183128]/15 bg-white px-3 text-sm outline-none focus:border-[#ff5d39] focus:ring-4 focus:ring-[#ff5d39]/10"
+                  class="h-10 w-full rounded-md border border-[#cfd5d0] bg-white px-3 text-sm outline-none focus:border-[#1d5b45] focus:ring-3 focus:ring-[#1d5b45]/10"
                 />
               </div>
             </details>
           </.form>
 
-          <div class="mt-4 flex items-center justify-between text-[11px] text-[#527065]">
+          <div class="mt-3 flex items-center justify-between text-[11px] text-[#69726c]">
             <span class="inline-flex items-center gap-1.5">
               <span class={[
                 "size-2 rounded-full",
@@ -144,48 +141,48 @@
               type="button"
               phx-click="clear_filters"
               id="clear-filters"
-              class="font-semibold underline decoration-[#ff5d39]/50 underline-offset-4 hover:text-[#ff5d39]"
+              class="font-medium text-[#1d5b45] hover:underline"
             >
               Limpar
             </button>
           </div>
         </div>
 
-        <div id="process-results" phx-update="stream" class="min-h-0 flex-1 overflow-y-auto p-3">
+        <div id="process-results" phx-update="stream" class="min-h-0 flex-1 overflow-y-auto">
           <div
             id="results-empty"
-            class="hidden only:grid min-h-40 place-items-center rounded-2xl border border-dashed border-[#183128]/15 p-6 text-center"
+            class="hidden only:grid min-h-40 place-items-center p-6 text-center"
           >
             <div>
-              <.icon name="hero-map-pin" class="mx-auto size-6 text-[#ff5d39]" />
+              <.icon name="hero-map-pin" class="mx-auto size-5 text-[#69726c]" />
               <p class="mt-2 text-sm font-semibold">Nenhuma área encontrada</p>
-              <p class="mt-1 text-xs text-[#527065]">Tente ampliar os filtros.</p>
+              <p class="mt-1 text-xs text-[#69726c]">Revise ou limpe os filtros.</p>
             </div>
           </div>
           <.link
             :for={{id, process} <- @streams.processes}
             id={id}
             patch={~p"/?#{compact_params(Map.put(@filters, "process", process.id))}"}
-            class="group mb-2 block rounded-2xl border border-transparent p-4 transition duration-200 hover:border-[#183128]/10 hover:bg-[#f4f1e9]"
+            class="group block border-b border-[#edf0ed] px-4 py-3 transition hover:bg-[#f7f7f5]"
           >
             <div class="flex items-start justify-between gap-3">
               <div>
-                <p class="font-mono text-xs font-medium text-[#183128]">
+                <p class="font-mono text-xs font-medium text-[#1f2823]">
                   {process.process_number}
                 </p>
-                <p class="mt-1 line-clamp-1 text-sm font-semibold">
+                <p class="mt-1 line-clamp-1 text-sm font-medium">
                   {Enum.join(process.municipalities, ", ")}
                 </p>
               </div>
               <.icon
                 name="hero-arrow-up-right"
-                class="size-4 text-[#789087] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#ff5d39]"
+                class="size-4 text-[#8a928d] transition group-hover:text-[#1d5b45]"
               />
             </div>
-            <div class="mt-3 flex items-center gap-2 text-[11px] text-[#527065]">
+            <div class="mt-2 flex items-center gap-2 text-[11px] text-[#69726c]">
               <span
                 :if={process.availability}
-                class="inline-flex items-center gap-1.5 rounded-full bg-white px-2 py-1 ring-1 ring-[#183128]/8"
+                class="inline-flex items-center gap-1.5"
               >
                 <span class={[
                   "size-1.5 rounded-full",
@@ -200,7 +197,7 @@
         </div>
       </aside>
 
-      <section class="relative min-h-[48vh] overflow-hidden bg-[#dce4df] lg:min-h-0">
+      <section class="relative min-h-[45vh] overflow-hidden bg-[#e8ece9] lg:min-h-0">
         <div
           id="mining-map"
           phx-hook="MiningMap"
@@ -212,11 +209,11 @@
           class="absolute inset-0"
         >
           <div
-            class="absolute inset-0 grid place-items-center bg-[#dce4df] text-sm text-[#527065]"
+            class="absolute inset-0 grid place-items-center bg-[#e8ece9] text-sm text-[#69726c]"
             data-map-loading
           >
-            <span class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 shadow-lg">
-              <.icon name="hero-arrow-path" class="size-4 animate-spin text-[#ff5d39]" />
+            <span class="inline-flex items-center gap-2 rounded-md border border-[#dfe3df] bg-white px-3 py-2 shadow-sm">
+              <.icon name="hero-arrow-path" class="size-4 animate-spin text-[#1d5b45]" />
               Carregando território…
             </span>
           </div>
@@ -229,7 +226,7 @@
             data-map-layers-toggle
             aria-expanded="false"
             aria-controls="map-layers-panel"
-            class="grid size-11 place-items-center rounded-2xl border border-white/70 bg-[#fffdf8]/95 text-[#183128] shadow-[0_12px_35px_rgba(24,49,40,.18)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[#183128]/20 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff5d39]"
+            class="grid size-10 place-items-center rounded-md border border-[#dfe3df] bg-white text-[#1f2823] shadow-sm transition hover:bg-[#f7f7f5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1d5b45]"
           >
             <span class="sr-only">Configurar camadas do mapa</span>
             <.icon name="hero-square-3-stack-3d" class="size-5" />
@@ -239,31 +236,28 @@
             id="map-layers-panel"
             data-map-layers-panel
             hidden
-            class="mt-2 w-[min(18rem,calc(100vw-2rem))] rounded-[1.4rem] border border-white/70 bg-[#fffdf8]/96 p-4 text-[#183128] shadow-[0_22px_65px_rgba(16,35,28,.24)] backdrop-blur-xl"
+            class="mt-2 w-[min(18rem,calc(100vw-2rem))] rounded-lg border border-[#dfe3df] bg-white p-4 text-[#1f2823] shadow-lg"
           >
             <div class="flex items-start justify-between gap-4">
               <div>
-                <p class="font-mono text-[9px] tracking-[.2em] text-[#ff5d39] uppercase">
-                  Cartografia
-                </p>
-                <h2 class="font-display mt-1 text-xl font-semibold">Camadas</h2>
+                <h2 class="font-semibold">Camadas do mapa</h2>
               </div>
               <span
                 data-map-layer-status
-                class="max-w-28 text-right text-[10px] leading-tight text-[#527065]"
+                class="max-w-28 text-right text-[10px] leading-tight text-[#69726c]"
                 role="status"
               ></span>
             </div>
 
             <fieldset class="mt-4">
               <legend class="text-[10px] font-bold tracking-wider uppercase">Mapa base</legend>
-              <div class="mt-2 grid grid-cols-2 rounded-xl bg-[#e9e5dc] p-1">
+              <div class="mt-2 grid grid-cols-2 rounded-md bg-[#f0f2f0] p-1">
                 <button
                   type="button"
                   id="basemap-street"
                   data-basemap="street"
                   aria-pressed="true"
-                  class="rounded-lg px-3 py-2 text-xs font-semibold transition aria-pressed:bg-[#183128] aria-pressed:text-white aria-pressed:shadow-sm"
+                  class="rounded px-3 py-2 text-xs font-medium transition aria-pressed:bg-[#1f2823] aria-pressed:text-white"
                 >
                   Ruas
                 </button>
@@ -273,18 +267,18 @@
                   id="basemap-satellite"
                   data-basemap="satellite"
                   aria-pressed="false"
-                  class="rounded-lg px-3 py-2 text-xs font-semibold transition aria-pressed:bg-[#183128] aria-pressed:text-white aria-pressed:shadow-sm"
+                  class="rounded px-3 py-2 text-xs font-medium transition aria-pressed:bg-[#1f2823] aria-pressed:text-white"
                 >
                   Satélite
                 </button>
               </div>
             </fieldset>
 
-            <fieldset class="mt-5 space-y-3 border-t border-[#183128]/10 pt-4">
+            <fieldset class="mt-4 space-y-3 border-t border-[#dfe3df] pt-4">
               <legend class="sr-only">Camadas de dados</legend>
               <label
                 for="map-layer-mining"
-                class="flex cursor-pointer items-center justify-between gap-3 text-xs font-semibold"
+                class="flex cursor-pointer items-center justify-between gap-3 text-xs font-medium"
               >
                 Áreas minerárias
                 <span class="relative inline-flex h-6 w-10 shrink-0 items-center">
@@ -295,13 +289,13 @@
                     checked
                     class="peer sr-only"
                   />
-                  <span class="absolute inset-0 rounded-full bg-[#c9c7bf] transition peer-checked:bg-[#ff5d39]"></span>
+                  <span class="absolute inset-0 rounded-full bg-[#cfd5d0] transition peer-checked:bg-[#1d5b45]"></span>
                   <span class="relative ml-1 size-4 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></span>
                 </span>
               </label>
               <label
                 for="map-layer-states"
-                class="flex cursor-pointer items-center justify-between gap-3 text-xs font-semibold"
+                class="flex cursor-pointer items-center justify-between gap-3 text-xs font-medium"
               >
                 Marcações estaduais
                 <span class="relative inline-flex h-6 w-10 shrink-0 items-center">
@@ -312,7 +306,7 @@
                     checked
                     class="peer sr-only"
                   />
-                  <span class="absolute inset-0 rounded-full bg-[#c9c7bf] transition peer-checked:bg-[#31584b]"></span>
+                  <span class="absolute inset-0 rounded-full bg-[#cfd5d0] transition peer-checked:bg-[#1d5b45]"></span>
                   <span class="relative ml-1 size-4 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></span>
                 </span>
               </label>
@@ -320,7 +314,7 @@
 
             <div
               data-mining-opacity-control
-              class="mt-4 border-t border-[#183128]/10 pt-4 transition"
+              class="mt-4 border-t border-[#dfe3df] pt-4 transition"
             >
               <div class="flex items-center justify-between gap-3">
                 <label
@@ -330,7 +324,7 @@
                 <output
                   data-mining-opacity-output
                   for="map-mining-opacity"
-                  class="font-mono text-[10px] text-[#527065]"
+                  class="font-mono text-[10px] text-[#69726c]"
                 >100%</output>
               </div>
               <input
@@ -341,7 +335,7 @@
                 max="100"
                 step="5"
                 value="100"
-                class="mt-2 h-1.5 w-full cursor-pointer accent-[#ff5d39] disabled:cursor-not-allowed"
+                class="mt-2 h-1.5 w-full cursor-pointer accent-[#1d5b45] disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -349,10 +343,10 @@
 
         <div
           id="map-legend"
-          class="pointer-events-none absolute top-4 left-4 z-10 hidden rounded-2xl border border-white/60 bg-[#fffdf8]/92 p-3 text-[10px] shadow-xl backdrop-blur md:block"
+          class="pointer-events-none absolute top-4 left-4 z-10 hidden rounded-md border border-[#dfe3df] bg-white/95 p-3 text-[10px] shadow-sm md:block"
         >
           <p class="font-bold tracking-wide uppercase">Situação</p>
-          <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[#527065]">
+          <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[#69726c]">
             <span class="inline-flex items-center gap-1.5"><i class="size-2 rounded-full bg-emerald-500"></i>Apta</span>
             <span class="inline-flex items-center gap-1.5"><i class="size-2 rounded-full bg-amber-400"></i>Para análise</span>
             <span class="inline-flex items-center gap-1.5"><i class="size-2 rounded-full bg-orange-500"></i>Em análise</span>
@@ -363,62 +357,63 @@
         <article
           :if={@selected_process}
           id="process-detail"
-          class="absolute right-3 bottom-3 left-3 z-20 max-h-[78%] overflow-y-auto rounded-[1.5rem] border border-white/60 bg-[#fffdf8]/95 p-5 shadow-[0_24px_80px_rgba(16,35,28,.28)] backdrop-blur-xl sm:left-auto sm:w-[390px] sm:p-6"
+          class="absolute right-3 bottom-3 left-3 z-20 max-h-[78%] overflow-y-auto rounded-lg border border-[#dfe3df] bg-white p-5 shadow-xl sm:left-auto sm:w-[390px]"
         >
           <button
             type="button"
             id="close-process-detail"
             phx-click="close_process"
             aria-label="Fechar detalhes"
-            class="absolute top-4 right-4 grid size-9 place-items-center rounded-full border border-[#183128]/10 bg-white transition hover:rotate-6 hover:border-[#183128]/30"
+            class="absolute top-3 right-3 grid size-8 place-items-center rounded-md text-[#69726c] transition hover:bg-[#f0f2f0] hover:text-[#1f2823]"
           >
             <.icon name="hero-x-mark" class="size-4" />
           </button>
-          <p class="font-mono text-[10px] tracking-[.18em] text-[#ff5d39] uppercase">
-            Processo minerário
-          </p>
-          <h2 class="font-display mt-2 text-3xl font-semibold">
+          <p class="text-xs font-medium text-[#69726c]">Processo minerário</p>
+          <h2 class="mt-1 font-mono text-xl font-semibold">
             {@selected_process.process_number}
           </h2>
           <p class="mt-1 pr-10 text-sm font-semibold">
             {Enum.join(@selected_process.municipalities, ", ")} · {@selected_process.state_code}
           </p>
 
-          <dl class="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#183128]/10 bg-[#183128]/10 text-sm">
-            <div class="bg-white p-3">
-              <dt class="text-[10px] tracking-wide text-[#527065] uppercase">Área</dt><dd class="mt-1 font-semibold">
+          <dl class="mt-5 grid grid-cols-2 border-t border-[#dfe3df] text-sm">
+            <div class="border-r border-b border-[#dfe3df] py-3 pr-3">
+              <dt class="text-[10px] tracking-wide text-[#69726c] uppercase">Área</dt><dd class="mt-1 font-medium">
                 {@selected_process.area_ha || "—"} ha
               </dd>
             </div>
-            <div class="bg-white p-3">
-              <dt class="text-[10px] tracking-wide text-[#527065] uppercase">Fase</dt><dd class="mt-1 font-semibold">
+            <div class="border-b border-[#dfe3df] py-3 pl-3">
+              <dt class="text-[10px] tracking-wide text-[#69726c] uppercase">Fase</dt><dd class="mt-1 font-medium">
                 {@selected_process.phase || "—"}
               </dd>
             </div>
-            <div class="col-span-2 bg-white p-3">
-              <dt class="text-[10px] tracking-wide text-[#527065] uppercase">Substâncias</dt><dd class="mt-1 font-semibold">
+            <div class="col-span-2 border-b border-[#dfe3df] py-3">
+              <dt class="text-[10px] tracking-wide text-[#69726c] uppercase">Substâncias</dt><dd class="mt-1 font-medium">
                 {Enum.join(@selected_process.substances, ", ") |> blank_fallback()}
               </dd>
             </div>
-            <div class="col-span-2 bg-white p-3">
-              <dt class="text-[10px] tracking-wide text-[#527065] uppercase">Último evento</dt><dd class="mt-1 font-semibold">
+            <div class="col-span-2 border-b border-[#dfe3df] py-3">
+              <dt class="text-[10px] tracking-wide text-[#69726c] uppercase">Último evento</dt><dd class="mt-1 font-medium">
                 {@selected_process.last_event || "—"}
               </dd>
             </div>
           </dl>
 
-          <div :if={@selected_process.availability} class="mt-4 rounded-2xl bg-[#f4f1e9] p-4">
-            <p class="text-[10px] tracking-wide text-[#527065] uppercase">Situação oficial</p>
+          <div
+            :if={@selected_process.availability}
+            class="mt-4 border-l-2 border-[#1d5b45] bg-[#f7f7f5] p-3"
+          >
+            <p class="text-[10px] tracking-wide text-[#69726c] uppercase">Situação oficial</p>
             <p class="mt-1 font-semibold">
               {@selected_process.availability.latest_edital_status_raw ||
                 @selected_process.availability.stock_status_raw}
             </p>
-            <p class="mt-1 text-xs leading-5 text-[#527065]">
+            <p class="mt-1 text-xs leading-5 text-[#69726c]">
               Categoria de navegação: {category_label(
                 @selected_process.availability.display_category
               )} · Regime: {@selected_process.availability.availability_regime || "não informado"}.
             </p>
-            <p class="mt-1 text-[10px] text-[#789087]">
+            <p class="mt-1 text-[10px] text-[#8a928d]">
               Fonte observada em {Calendar.strftime(
                 @selected_process.availability.source_observed_at,
                 "%d/%m/%Y às %H:%M UTC"
@@ -429,15 +424,15 @@
           <div
             :if={@selected_process.round_areas != []}
             id="round-history"
-            class="mt-4 rounded-2xl border border-[#183128]/10 bg-white p-4"
+            class="mt-4 border-t border-[#dfe3df] pt-4"
           >
-            <p class="text-[10px] tracking-wide text-[#527065] uppercase">Histórico de rodadas</p>
+            <p class="text-[10px] tracking-wide text-[#69726c] uppercase">Histórico de rodadas</p>
             <div
               :for={area <- @selected_process.round_areas}
-              class="mt-2 border-t border-[#183128]/10 pt-2 text-xs first:border-0 first:pt-0"
+              class="mt-2 border-t border-[#edf0ed] pt-2 text-xs first:border-0 first:pt-0"
             >
               <p class="font-semibold">{area.round.title} · Área {area.area_number}</p>
-              <p class="mt-0.5 text-[#527065]">{area.situation_raw} · {area.modality}</p>
+              <p class="mt-0.5 text-[#69726c]">{area.situation_raw} · {area.modality}</p>
             </div>
           </div>
 
@@ -447,7 +442,7 @@
               type="button"
               id="watch-process"
               phx-click="watch"
-              class="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#ff5d39] px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#ee4927]"
+              class="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#1d5b45] px-4 text-sm font-semibold text-white transition hover:bg-[#174936]"
             >
               <.icon name="hero-bell" class="size-4" /> Acompanhar mudanças
             </button>
@@ -456,7 +451,7 @@
               type="button"
               id="unwatch-process"
               phx-click="unwatch"
-              class="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#183128] px-4 text-sm font-bold text-white transition hover:-translate-y-0.5"
+              class="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#1f2823] px-4 text-sm font-semibold text-white transition hover:bg-black"
             >
               <.icon name="hero-check" class="size-4" /> Acompanhando
             </button>
@@ -464,13 +459,13 @@
               href={official_process_url(@selected_process.process_number)}
               target="_blank"
               rel="noreferrer"
-              class="grid size-11 place-items-center rounded-xl border border-[#183128]/15 bg-white transition hover:border-[#183128]/40"
+              class="grid size-11 place-items-center rounded-md border border-[#cfd5d0] bg-white transition hover:bg-[#f0f2f0]"
               title="Abrir fonte oficial ANM"
             >
               <.icon name="hero-arrow-top-right-on-square" class="size-4" />
             </a>
           </div>
-          <p class="mt-4 text-[10px] leading-4 text-[#789087]">
+          <p class="mt-4 text-[10px] leading-4 text-[#8a928d]">
             Informação de apoio. Consulte sempre o
             <a
               href="https://sople.anm.gov.br/portalpublico"

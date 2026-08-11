@@ -36,54 +36,55 @@ defmodule JazidaPhoenixWeb.Layouts do
   def app(assigns) do
     ~H"""
     <div class="min-h-full">
-      <header class="relative z-50 border-b border-[#183128]/10 bg-[#f4f1e9]/95 backdrop-blur-xl">
-        <div class="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-6">
-          <.link navigate={~p"/"} class="group flex items-center gap-3" id="brand-home-link">
-            <span class="grid size-9 place-items-center rounded-full bg-[#183128] text-[#e8c96a] transition-transform duration-300 group-hover:-rotate-6">
-              <.icon name="hero-map" class="size-5" />
+      <header class="relative z-50 border-b border-[#dfe3df] bg-white">
+        <div class="mx-auto flex h-14 max-w-[1600px] items-center justify-between px-4 sm:px-6">
+          <.link
+            navigate={~p"/"}
+            class="flex items-center gap-2.5 font-semibold tracking-tight text-[#1f2823]"
+            id="brand-home-link"
+          >
+            <span class="grid size-7 place-items-center rounded-md bg-[#1d5b45] text-white">
+              <.icon name="hero-map" class="size-4" />
             </span>
-            <span>
-              <span class="font-display block text-xl leading-none font-semibold tracking-tight">Jazida</span>
-              <span class="hidden font-mono text-[9px] tracking-[0.18em] text-[#527065] uppercase sm:block">Dados minerais abertos</span>
-            </span>
+            <span>Jazida</span>
           </.link>
 
           <nav
-            class="flex items-center gap-1 text-sm font-semibold"
+            class="flex items-center gap-1 text-sm"
             aria-label="Navegação principal"
           >
-            <.link navigate={~p"/"} class="rounded-full px-3 py-2 transition hover:bg-[#183128]/7">Explorar</.link>
+            <.link navigate={~p"/"} class="rounded-md px-3 py-2 transition hover:bg-[#f0f2f0]">Mapa</.link>
             <%= if @current_scope do %>
               <.link
                 navigate={~p"/notificacoes"}
-                class="rounded-full px-3 py-2 transition hover:bg-[#183128]/7"
+                class="rounded-md px-3 py-2 transition hover:bg-[#f0f2f0]"
                 id="nav-notifications"
               >
                 Alertas
               </.link>
               <.link
                 navigate={~p"/users/settings"}
-                class="hidden rounded-full px-3 py-2 transition hover:bg-[#183128]/7 sm:inline-flex"
+                class="hidden rounded-md px-3 py-2 transition hover:bg-[#f0f2f0] sm:inline-flex"
               >
                 {@current_scope.user.email}
               </.link>
               <.link
                 href={~p"/users/log-out"}
                 method="delete"
-                class="rounded-full border border-[#183128]/15 px-3 py-2 transition hover:border-[#183128]/40"
+                class="rounded-md px-3 py-2 text-[#69726c] transition hover:bg-[#f0f2f0] hover:text-[#1f2823]"
               >
                 Sair
               </.link>
             <% else %>
               <.link
                 navigate={~p"/users/log-in"}
-                class="rounded-full px-3 py-2 transition hover:bg-[#183128]/7"
+                class="rounded-md px-3 py-2 transition hover:bg-[#f0f2f0]"
               >Entrar</.link>
               <.link
                 navigate={~p"/users/register"}
-                class="rounded-full bg-[#ff5d39] px-4 py-2 text-white shadow-[0_6px_20px_rgba(255,93,57,.24)] transition hover:-translate-y-0.5 hover:bg-[#ee4927]"
+                class="rounded-md bg-[#1d5b45] px-3 py-2 font-semibold text-white transition hover:bg-[#174936]"
               >
-                Criar conta
+                Cadastrar
               </.link>
             <% end %>
           </nav>
